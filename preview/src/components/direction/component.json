@@ -1,0 +1,12 @@
+{
+  "name": "direction",
+  "description": "Tells components whether the text runs left to right or right to left",
+  "authors": ["dioxus-registry contributors"],
+  "exclude": ["variants", "docs.md", "component.json"],
+  "cargoDependencies": [
+    {
+      "name": "dioxus-registry-primitives",
+      "git": "https://github.com/bsye/dioxus-registry"
+    }
+  ]
+}

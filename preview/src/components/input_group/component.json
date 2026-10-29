@@ -1,0 +1,19 @@
+{
+  "name": "input_group",
+  "description": "An input or textarea with addons, text and buttons around it, like a chat composer",
+  "authors": ["dioxus-registry contributors"],
+  "exclude": ["variants", "docs.md", "component.json"],
+  "cargoDependencies": [
+    {
+      "name": "dioxus-primitives",
+      "git": "https://github.com/DioxusLabs/components"
+    }
+  ],
+  "componentDependencies": [
+    {
+      "name": "button",
+      "git": "https://github.com/DioxusLabs/components"
+    }
+  ],
+  "globalAssets": ["../../../assets/dx-components-theme.css"]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "attachment",
+  "description": "A file or image attached to a message, with upload states, sizes and actions",
+  "authors": ["dioxus-registry contributors"],
+  "exclude": ["variants", "docs.md", "component.json"],
+  "cargoDependencies": [
+    {
+      "name": "dioxus-primitives",
+      "git": "https://github.com/DioxusLabs/components"
+    }
+  ],
+  "componentDependencies": [
+    {
+      "name": "button",
+      "git": "https://github.com/DioxusLabs/components"
+    }
+  ],
+  "globalAssets": ["../../../assets/dx-components-theme.css"]
+}

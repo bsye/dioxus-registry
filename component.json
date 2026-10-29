@@ -1,0 +1,14 @@
+{
+  "name": "dioxus-registry",
+  "description": "shadcn/ui components that dioxus-components does not have yet, in its layout",
+  "members": [
+    "preview/src/components/attachment",
+    "preview/src/components/bubble",
+    "preview/src/components/direction",
+    "preview/src/components/input_group",
+    "preview/src/components/marker",
+    "preview/src/components/message",
+    "preview/src/components/message_scroller",
+    "preview/src/components/spinner"
+  ]
+}

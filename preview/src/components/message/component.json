@@ -1,0 +1,13 @@
+{
+  "name": "message",
+  "description": "Lays out one chat message: avatar, header, content and footer, aligned to either side",
+  "authors": ["dioxus-registry contributors"],
+  "exclude": ["variants", "docs.md", "component.json"],
+  "cargoDependencies": [
+    {
+      "name": "dioxus-primitives",
+      "git": "https://github.com/DioxusLabs/components"
+    }
+  ],
+  "globalAssets": ["../../../assets/dx-components-theme.css"]
+}

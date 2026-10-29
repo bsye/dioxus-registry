@@ -1,0 +1,27 @@
+{
+  "name": "message_scroller",
+  "description": "A chat transcript that follows new messages, anchors new turns, keeps its place when history loads and offers scroll-to-end",
+  "authors": ["dioxus-registry contributors"],
+  "exclude": ["variants", "docs.md", "component.json"],
+  "cargoDependencies": [
+    {
+      "name": "dioxus-primitives",
+      "git": "https://github.com/DioxusLabs/components"
+    },
+    {
+      "name": "dioxus-icons",
+      "version": "=0.2.0-alpha.3"
+    },
+    {
+      "name": "dioxus-registry-primitives",
+      "git": "https://github.com/bsye/dioxus-registry"
+    }
+  ],
+  "componentDependencies": [
+    {
+      "name": "button",
+      "git": "https://github.com/DioxusLabs/components"
+    }
+  ],
+  "globalAssets": ["../../../assets/dx-components-theme.css"]
+}

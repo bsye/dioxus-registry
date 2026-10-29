@@ -1,0 +1,13 @@
+[package]
+name = "dioxus-registry-primitives"
+version = "0.1.0"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+description = "Headless behaviour for the dioxus-registry components: the message scroller and the direction context"
+repository = "https://github.com/bsye/dioxus-registry"
+
+[dependencies]
+dioxus.workspace = true
+
+[dev-dependencies]
+dioxus-ssr.workspace = true

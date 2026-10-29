@@ -1,0 +1,18 @@
+[package]
+name = "preview"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+dioxus = { workspace = true, features = ["router"] }
+dioxus-icons.workspace = true
+dioxus-primitives.workspace = true
+dioxus-registry-primitives.workspace = true
+
+[dev-dependencies]
+dioxus-ssr.workspace = true
+
+[features]
+default = ["web"]
+web = ["dioxus/web", "dioxus-primitives/web"]

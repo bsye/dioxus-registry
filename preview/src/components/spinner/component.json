@@ -1,0 +1,17 @@
+{
+  "name": "spinner",
+  "description": "An animated indicator for work in progress",
+  "authors": ["dioxus-registry contributors"],
+  "exclude": ["variants", "docs.md", "component.json"],
+  "cargoDependencies": [
+    {
+      "name": "dioxus-primitives",
+      "git": "https://github.com/DioxusLabs/components"
+    },
+    {
+      "name": "dioxus-icons",
+      "version": "=0.2.0-alpha.3"
+    }
+  ],
+  "globalAssets": ["../../../assets/dx-components-theme.css"]
+}
