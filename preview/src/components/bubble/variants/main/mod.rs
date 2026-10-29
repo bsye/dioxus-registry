@@ -5,7 +5,7 @@ use super::super::component::*;
 #[component]
 pub fn Demo() -> Element {
     rsx! {
-        div { style: "display: flex; width: 100%; max-width: 24rem; flex-direction: column; gap: 2rem;",
+        div { style: "display: flex; width: 100%; max-width: 24rem; flex-direction: column; gap: 2rem; padding-bottom: 1rem;",
             Bubble { align: BubbleAlign::End, BubbleContent { "Hey there! What's up?" } }
             BubbleGroup {
                 Bubble { variant: BubbleVariant::Muted, BubbleContent { "Hey! Want to see chat bubbles?" } }

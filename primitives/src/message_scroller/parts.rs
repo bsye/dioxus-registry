@@ -84,7 +84,10 @@ pub fn MessageScrollerViewport(
             "data-scrollable": rendered.scrollable.attribute(),
             "data-autoscrolling": rendered.autoscrolling.then_some(""),
             "data-pending-scroll": rendered.pending.then_some(""),
-            onmounted: move |event| context.viewport.set(Some(event.data())),
+            onmounted: move |event| {
+                context.viewport.set(Some(event.data()));
+                context.queue(Job::Content);
+            },
             onscroll: move |_| context.queue(Job::Scroll),
             onresize: move |_| context.queue(Job::Resize),
             onwheel: move |_| context.controller.write().user_intent(),
@@ -106,17 +109,12 @@ pub fn MessageScrollerContent(
     #[props(extends = GlobalAttributes)] attributes: Vec<Attribute>,
     children: Element,
 ) -> Element {
-    let mut context = use_context::<ScrollerContext>();
+    let context = use_context::<ScrollerContext>();
     let spacer_height = context.rendered.read().spacer_height;
     rsx! {
         div {
             role: "log",
             aria_relevant: "additions",
-            onmounted: move |event| {
-                context.content.set(Some(event.data()));
-                context.queue(Job::Content);
-            },
-            onresize: move |_| context.queue(Job::Resize),
             ..attributes,
             {children}
             div {
@@ -125,7 +123,6 @@ pub fn MessageScrollerContent(
                 class: spacer_class,
                 hidden: spacer_height == 0.0,
                 style: "height: {spacer_height}px",
-                onmounted: move |event| context.spacer.set(Some(event.data())),
             }
         }
     }
@@ -150,6 +147,7 @@ pub fn MessageScrollerItem(
             "data-message-id": message_id,
             "data-scroll-anchor": scroll_anchor.then_some("true"),
             onmounted: move |event| context.register_row(key, event.data(), registered.clone(), scroll_anchor),
+            onresize: move |_| context.queue(Job::Resize),
             ..attributes,
             {children}
         }

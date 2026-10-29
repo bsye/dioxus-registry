@@ -18,7 +18,6 @@ async fn span(mounted: &Rc<MountedData>) -> Option<Span> {
 impl ScrollerContext {
     pub(super) async fn measure(mut self) -> Option<Layout> {
         let viewport = self.viewport.peek().clone()?;
-        let content = self.content.peek().clone()?;
         let handles: Vec<_> = self
             .rows
             .peek()
@@ -32,7 +31,6 @@ impl ScrollerContext {
         let viewport_span = span(&viewport).await?;
         let scroll_top = viewport.get_scroll_offset().await.ok()?.y;
         let scroll_height = viewport.get_scroll_size().await.ok()?.height;
-        let content_span = span(&content).await?;
         let mut rows = Vec::with_capacity(handles.len());
         for (key, mounted, message_id, anchor) in handles {
             if let Some(span) = span(&mounted).await {
@@ -45,15 +43,23 @@ impl ScrollerContext {
             }
         }
         rows.sort_by(|a, b| a.span.top.total_cmp(&b.span.top).then(a.key.cmp(&b.key)));
+        let content_top = viewport_span.top - scroll_top;
+        let gap = rows
+            .windows(2)
+            .map(|pair| pair[1].span.top - pair[0].span.bottom)
+            .filter(|gap| *gap >= 0.0)
+            .reduce(f64::min)
+            .unwrap_or(0.0);
         let spacer_height = self.controller.peek().spacer_height();
-        let last_bottom = match self.spacer.peek().clone() {
-            Some(spacer) if spacer_height > 0.0 => span(&spacer).await.map(|span| span.bottom),
-            _ => rows.last().map(|row| row.span.bottom),
-        };
-        let stretched = content_span.height() <= viewport_span.height() + 1.0;
-        if let (false, Some(bottom)) = (stretched, last_bottom) {
-            self.padding_end
-                .set((content_span.bottom - bottom).max(0.0));
+        let stretched = scroll_height <= viewport_span.height() + 1.0;
+        if let (false, Some(last)) = (stretched, rows.last()) {
+            let tail = if spacer_height > 0.0 {
+                gap + spacer_height
+            } else {
+                0.0
+            };
+            let padding_end = content_top + scroll_height - last.span.bottom - tail;
+            self.padding_end.set(padding_end.max(0.0));
         }
         Some(Layout {
             viewport: viewport_span,
@@ -61,14 +67,9 @@ impl ScrollerContext {
             scroll_height,
             padding_start: rows
                 .first()
-                .map_or(0.0, |row| (row.span.top - content_span.top).max(0.0)),
+                .map_or(0.0, |row| (row.span.top - content_top).max(0.0)),
             padding_end: *self.padding_end.peek(),
-            gap: rows
-                .windows(2)
-                .map(|pair| pair[1].span.top - pair[0].span.bottom)
-                .filter(|gap| *gap >= 0.0)
-                .reduce(f64::min)
-                .unwrap_or(0.0),
+            gap,
             rows,
         })
     }
